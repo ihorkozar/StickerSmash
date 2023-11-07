@@ -1,5 +1,5 @@
 import {StatusBar} from "expo-status-bar";
-import {StyleSheet, View, Platform} from "react-native";
+import {View, Platform, ImageSourcePropType} from "react-native";
 import * as ImagePicker from 'expo-image-picker';
 import Button from './components/Button';
 import ImageViewer from './components/ImageViewer';
@@ -13,14 +13,15 @@ import {GestureHandlerRootView} from "react-native-gesture-handler";
 import * as MediaLibrary from 'expo-media-library';
 import {captureRef} from 'react-native-view-shot';
 import domtoimage from 'dom-to-image';
+import {styles} from "./styles";
 
 const PlaceholderImage = require("./assets/images/background-image.png");
 
 export default function App() {
-    const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedImage, setSelectedImage] = useState<null|string>(null);
     const [showAppOptions, setShowAppOptions] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [pickedEmoji, setPickedEmoji] = useState(null);
+    const [pickedEmoji, setPickedEmoji] = useState<ImageSourcePropType|null>(null);
     const [status, requestPermission] = MediaLibrary.usePermissions();
 
     const pickImageAsync = async () => {
@@ -110,38 +111,14 @@ export default function App() {
                 ) : (
                     <View style={styles.footerContainer}>
                         <Button theme="primary" label="Choose a photo" onPress={pickImageAsync}/>
-                        <Button label="Use this photo" onPress={() => setShowAppOptions(true)} theme={undefined}/>
+                        <Button label="Use this photo" onPress={() => setShowAppOptions(true)}/>
                     </View>
                 )}
                 <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
-                    <EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose}/>
+                    <EmojiList onSelect={(value: ImageSourcePropType) => setPickedEmoji(value)} onCloseModal={onModalClose}/>
                 </EmojiPicker>
                 <StatusBar style="light"/>
             </View>
         </GestureHandlerRootView>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#25292e',
-        alignItems: 'center',
-    },
-    imageContainer: {
-        flex: 1,
-        paddingTop: 58,
-    },
-    footerContainer: {
-        flex: 1 / 3,
-        alignItems: 'center',
-    },
-    optionsContainer: {
-        position: 'absolute',
-        bottom: 80,
-    },
-    optionsRow: {
-        alignItems: 'center',
-        flexDirection: 'row',
-    },
-});

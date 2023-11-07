@@ -1,5 +1,10 @@
-import {View, Image} from 'react-native';
-import {PanGestureHandler, TapGestureHandler} from 'react-native-gesture-handler';
+import {View, Image, GestureResponderEvent, ImageSourcePropType} from 'react-native';
+import {
+    GestureEvent,
+    PanGestureHandler,
+    PanGestureHandlerEventPayload,
+    TapGestureHandler
+} from 'react-native-gesture-handler';
 import Animated, {
     useAnimatedStyle,
     useSharedValue,
@@ -11,12 +16,14 @@ import Animated, {
 const AnimatedImage = Animated.createAnimatedComponent(Image);
 const AnimatedView = Animated.createAnimatedComponent(View);
 
-export default function EmojiSticker({imageSize, stickerSource}) {
+type Props = { imageSize: number, stickerSource: ImageSourcePropType }
+
+export default function EmojiSticker({imageSize, stickerSource}: Props) {
     const scaleImage = useSharedValue(imageSize);
     const translateX = useSharedValue(0);
     const translateY = useSharedValue(0);
 
-    const onDoubleTap = useAnimatedGestureHandler({
+    const onDoubleTap: (event: GestureEvent<any>) => void = useAnimatedGestureHandler({
         onActive: () => {
             if (scaleImage.value !== imageSize * 2) {
                 scaleImage.value = scaleImage.value * 2;
@@ -32,7 +39,7 @@ export default function EmojiSticker({imageSize, stickerSource}) {
     });
 
     const onDrag = useAnimatedGestureHandler({
-        onStart: (event, context: { translateX: number, translateY: number }) => {
+        onStart: (_event, context: { translateX: number, translateY: number }) => {
             context.translateX = translateX.value;
             context.translateY = translateY.value;
         },
