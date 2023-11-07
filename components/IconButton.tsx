@@ -1,4 +1,4 @@
-import {GestureResponderEvent, Pressable, StyleSheet, Text} from 'react-native';
+import {GestureResponderEvent, Pressable, Text} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import {styles} from "../styles";
 

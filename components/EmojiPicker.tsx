@@ -1,4 +1,4 @@
-import {Modal, View, Text, Pressable, StyleSheet, GestureResponderEvent} from 'react-native';
+import {Modal, View, Text, Pressable, GestureResponderEvent} from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import {styles} from "../styles";
 

@@ -1,4 +1,4 @@
-import {StyleSheet, View, Pressable, Text, GestureResponderEvent} from 'react-native';
+import {View, Pressable, Text, GestureResponderEvent} from 'react-native';
 import {FontAwesome} from "@expo/vector-icons";
 import {styles} from "../styles";
 

@@ -1,13 +1,4 @@
-import {useState} from 'react';
-import {
-    StyleSheet,
-    FlatList,
-    Image,
-    Platform,
-    Pressable,
-    GestureResponderEvent,
-    ImageSourcePropType
-} from 'react-native';
+import {FlatList, Image, Platform, Pressable, ImageSourcePropType} from 'react-native';
 import {styles} from "../styles";
 
 type Props = { onCloseModal: VoidFunction, onSelect: (value: ImageSourcePropType) => void }
