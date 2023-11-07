@@ -12,18 +12,18 @@ import EmojiSticker from "./components/EmojiSticker";
 import {GestureHandlerRootView} from "react-native-gesture-handler";
 import * as MediaLibrary from 'expo-media-library';
 import {captureRef} from 'react-native-view-shot';
-import domtoimage from 'dom-to-image';
-import {styles} from "./styles";
+import domToImage from 'dom-to-image';
+import {styles} from './styles';
 
 const PlaceholderImage = require("./assets/images/background-image.png");
 
 export default function App() {
-    const [selectedImage, setSelectedImage] = useState<null|string>(null);
+    const [selectedImage, setSelectedImage] = useState<null | string>(null);
     const [showAppOptions, setShowAppOptions] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [pickedEmoji, setPickedEmoji] = useState<ImageSourcePropType|null>(null);
+    const [pickedEmoji, setPickedEmoji] = useState<ImageSourcePropType | null>(null);
     const [status, requestPermission] = MediaLibrary.usePermissions();
-
+    const imageRef: React.MutableRefObject<Node | undefined> = useRef();
     const pickImageAsync = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             allowsEditing: true,
@@ -64,9 +64,9 @@ export default function App() {
             } catch (e) {
                 console.log(e);
             }
-        } else {
+        } else if (imageRef.current) {
             try {
-                const dataUrl = await domtoimage.toJpeg(imageRef.current, {
+                const dataUrl = await domToImage.toJpeg(imageRef.current, {
                     quality: 0.95,
                     width: 320,
                     height: 440,
@@ -85,8 +85,6 @@ export default function App() {
     if (status === null) {
         requestPermission();
     }
-
-    const imageRef = useRef();
 
     return (
         <GestureHandlerRootView style={styles.container}>
@@ -115,7 +113,8 @@ export default function App() {
                     </View>
                 )}
                 <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
-                    <EmojiList onSelect={(value: ImageSourcePropType) => setPickedEmoji(value)} onCloseModal={onModalClose}/>
+                    <EmojiList onSelect={(value: ImageSourcePropType) => setPickedEmoji(value)}
+                               onCloseModal={onModalClose}/>
                 </EmojiPicker>
                 <StatusBar style="light"/>
             </View>
