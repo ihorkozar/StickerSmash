@@ -5,7 +5,9 @@
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "moduleResolution": "node"
   },
+  //"include": ["src/**/*.ts", "tests/**/*.ts", "assets/images/**"],
   "extends": "expo/tsconfig.base"
 }

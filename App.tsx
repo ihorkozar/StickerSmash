@@ -15,7 +15,7 @@ import {captureRef} from 'react-native-view-shot';
 import domToImage from 'dom-to-image';
 import {styles} from './styles';
 
-const PlaceholderImage = require("./assets/images/background-image.png");
+const PlaceholderImage = require('./assets/images/background-image.png');
 
 export default function App() {
     const [selectedImage, setSelectedImage] = useState<null | string>(null);
@@ -23,7 +23,7 @@ export default function App() {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [pickedEmoji, setPickedEmoji] = useState<ImageSourcePropType | null>(null);
     const [status, requestPermission] = MediaLibrary.usePermissions();
-    const imageRef: React.MutableRefObject<Node | undefined> = useRef();
+    const imageRef: React.MutableRefObject<null> = useRef(null);
     const pickImageAsync = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             allowsEditing: true,
